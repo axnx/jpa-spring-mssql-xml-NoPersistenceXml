@@ -26,6 +26,9 @@ public class Main {
 
 		list = userManager.findAllUsers();
 		System.out.println("User count: " + list.size());
+		
+		HelloWorld obj = (HelloWorld) ctx.getBean("helloWorld");
+	    obj.getMessage();
 
 	}
 }
