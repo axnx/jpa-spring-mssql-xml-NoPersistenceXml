@@ -32,17 +32,26 @@
 	
 	</bean>
 
+
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="testPU" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
 		<property name="dataSource" ref="dataSource" />
-		
+		<property name="packagesToScan" value="de.storost.spring.tx.model" />
 	</bean>
 	
 	<bean id = "helloWorld" class = "de.storost.spring.tx.HelloWorld" init-method = "init" 
       destroy-method = "destroy">
       <property name = "message" value = "${db.username}"/>
    </bean>
+   
+   <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" id="jpaVendorAdapter">
+	 <property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect"/>
+	 <property name="showSql" value="true"/>
+	</bean>	
    
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
